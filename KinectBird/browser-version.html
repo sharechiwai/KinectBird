@@ -16,7 +16,11 @@
 </head>
 <body>
 
-  <canvas id="main-canvas" width="640" height="480"></canvas>
+  <p id="report"></p>
+
+  <div>
+    <canvas id="main-canvas" width="640" height="480"></canvas>
+  </div>
 
   <script src="./vendor/js/lodash.min.js"></script>
   <script src="./js/app.compiled.js"></script>
@@ -27,32 +31,32 @@
           data = [
             {
               point: { x: 300.0, y: 300.0 },
-              bodyId: '1',
+              bodyId: 0,
               active: false
             },
             {
               point: { x: 300.0, y: 300.0 },
-              bodyId: '2',
+              bodyId: 0,
               active: false
             },
             {
               point: { x: 300.0, y: 300.0 },
-              bodyId: '3',
+              bodyId: 0,
               active: false
             },
             {
               point: { x: 300.0, y: 300.0 },
-              bodyId: '4',
+              bodyId: 0,
               active: false
             },
             {
               point: { x: 300.0, y: 300.0 },
-              bodyId: '5',
+              bodyId: 5,
               active: false
             },
             {
               point: { x: 300.0, y: 300.0 },
-              bodyId: '6',
+              bodyId: 0,
               active: false
             },
           ];
@@ -60,7 +64,8 @@
 
       var changingBody = data[4],
           bump = 0,
-          tick = 0;
+          tick = 0,
+          report = document.getElementById('report');
 
       changingBody.active = true;
       var gameTick = function () {
@@ -72,6 +77,12 @@
           bump = bump - taken;
         }
         game.update(data);
+
+        var text = 'GAME INFO => ';
+        _.forEach(game.state.players, function (player) {
+          text = text + 'Player ' + player.id + ', State: ' + player.state + '    ';
+        });
+        report.innerText = text;
       };
 
       window.onkeydown = function (event) {

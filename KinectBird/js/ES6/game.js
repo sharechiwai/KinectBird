@@ -1,4 +1,4 @@
-import { Player, DEAD, INACTIVE, PREPARING, PLAYING  } from './player.js';
+import { DEAD, PREPARING, PLAYING, Player  } from './player.js';
 import { Renderer } from './renderer.js';
 import { Box } from './box.js';
 
@@ -35,14 +35,14 @@ export class Game {
     let self = this;
 
     _.forEach(frameData, function (data) {
+      if (data.bodyId === 0 || !data.active) {
+        return;
+      }
+
       let player = self.players[data.bodyId];
 
       if (!player) {
         player = self.createPlayer(data);
-      }
-
-      if (data.active && player.state === INACTIVE) {
-        self.prepareGameFor(player);
       }
 
       if (player.state === PREPARING || player.state === PLAYING) {
@@ -57,11 +57,7 @@ export class Game {
       x: this.state.width / 2.0,
       y: this.state.height / 2.0
     });
-    if (data.active) {
-      this.prepareGameFor(player);
-    } else {
-      player.state = INACTIVE;
-    }
+    this.prepareGameFor(player);
 
     this.state.players.push(player);
     this.players[player.id] = player;
@@ -97,6 +93,11 @@ export class Game {
 
     _.forEach(state.players, function (player) {
       if (player.state === PLAYING) {
+        if (player.position.y < player.halfSize || player.position.y > self.state.height - player.halfSize) {
+          self.killPlayer(player);
+          return;
+        }
+
         _.any(state.boxes, function (box) {
           if (box.didCollideWith(player)) {
             self.killPlayer(player);
@@ -116,7 +117,7 @@ export class Game {
     player.state = DEAD;
     setTimeout(function () {
       self.prepareGameFor(player);
-    }, 5000);
+    }, 3000);
   }
 
 
@@ -124,6 +125,8 @@ export class Game {
     player.state = PREPARING;
     player.position.x = this.state.width / 2.0;
     player.position.y = this.state.height / 2.0;
+    player.velocity.x = 0.0;
+    player.velocity.y = 0.0;
 
     setTimeout(function () {
       player.state = PLAYING;

@@ -2,9 +2,8 @@ const EASING = 0.1;
 const ONE_MINUS_EASING = 1.0 - EASING;
 
 export const DEAD = 0;
-export const INACTIVE = 1;
-export const PREPARING = 2;
-export const PLAYING = 4;
+export const PREPARING = 1;
+export const PLAYING = 2;
 
 export class Player {
   constructor (data, position) {
@@ -16,7 +15,7 @@ export class Player {
     this.position = _.clone(position);
     this.updateDataWith(data, 0.0);
 
-    this.state = INACTIVE;
+    this.state = PREPARING;
   }
 
   updateDataWith(data, gravity) {

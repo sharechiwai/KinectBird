@@ -1,4 +1,4 @@
-import { DEAD, INACTIVE, PREPARING, PLAYING } from './player.js';
+import { DEAD, PREPARING, PLAYING } from './player.js';
 
 export class Renderer {
   constructor(canvas) {
@@ -53,7 +53,6 @@ export class Renderer {
 
     _.forEach(players, function (player) {
       switch (player.state) {
-        case INACTIVE:
         case DEAD:
           return;
 
