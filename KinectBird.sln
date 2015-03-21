@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "KinectBird", "KinectBird\KinectBird.jsproj", "{F70CB026-A798-46A1-B7DE-81A9364450BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Debug|ARM.Build.0 = Debug|ARM
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Debug|ARM.Deploy.0 = Debug|ARM
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Debug|x64.ActiveCfg = Debug|x64
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Debug|x64.Build.0 = Debug|x64
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Debug|x64.Deploy.0 = Debug|x64
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Debug|x86.ActiveCfg = Debug|x86
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Debug|x86.Build.0 = Debug|x86
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Debug|x86.Deploy.0 = Debug|x86
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Release|ARM.ActiveCfg = Release|ARM
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Release|ARM.Build.0 = Release|ARM
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Release|ARM.Deploy.0 = Release|ARM
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Release|x64.ActiveCfg = Release|x64
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Release|x64.Build.0 = Release|x64
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Release|x64.Deploy.0 = Release|x64
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Release|x86.ActiveCfg = Release|x86
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Release|x86.Build.0 = Release|x86
+		{F70CB026-A798-46A1-B7DE-81A9364450BD}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
