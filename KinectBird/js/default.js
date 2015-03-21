@@ -79,6 +79,8 @@
     //}
 
 
+
+
     /*
      * This function is used to return Body and Joint
      */
@@ -145,7 +147,7 @@
             var boneEnd = bones[boneIndex].jointEnd;
 
             if (boneEnd === 20 || boneStart === 20) continue;
-            console.log(boneEnd);
+            //console.log(boneEnd);
             var joint0 = joints.lookup(boneStart);
             var joint1 = joints.lookup(boneEnd);
 
@@ -260,10 +262,10 @@
     var hasClippedEdges = function (edges, clippedEdge) {
         return ((edges & clippedEdge) != 0);
     }
-
+    var jointPoints = new Array();
     // Allocate space for joint locations
     var createJointPoints = function () {
-        var jointPoints = new Array();
+       
 
         for (var i = 0; i < jointCount; ++i) {
             jointPoints.push({ joint: 0, x: 0, y: 0 });
@@ -396,5 +398,41 @@
             sensor.close();
         }
     }
+
+
+    WinJS.UI.Pages.define("/default.html", {
+        // This function is called whenever a user navigates to this page. It
+        // populates the page elements with the app's data.
+        ready: function (element, options) {
+            // TODO: Initialize the page here.
+            var button1 = element.querySelector("#btnRun");
+            button1.addEventListener("click", this.button1Click, false);
+        },
+
+        button1Click: function (mouseEvent) {
+            app.getBodyJoints();
+          
+        }
+    });
+
+    app.getBodyJoints = function () {
+        var resultArray = []
+        for (var i = 0; i < bodies.length; i++) {
+
+            //   if (bodies[i].isTracked) {
+
+            var t = { bodyId: i, jointPoint: jointPoints[20], active: bodies[i].isTracked };
+            //console.log("" + i + ": " + bodies[i].joints);
+            //console.log(t)
+            resultArray.push(t);
+            //  }
+
+        };
+        console.log(resultArray);
+    }
+
     app.start();
 })();
+
+
+
