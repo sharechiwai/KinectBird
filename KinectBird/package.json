@@ -1,0 +1,31 @@
+{
+  "name": "KinectBird",
+  "version": "0.0.0",
+  "description": "Flappy Bird with Kinect",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sharechiwai/KinectBird.git"
+  },
+  "keywords": [
+    "flappy",
+    "bird",
+    "kinect"
+  ],
+  "author": "Bryan Yap & Chi Yau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sharechiwai/KinectBird/issues"
+  },
+  "homepage": "https://github.com/sharechiwai/KinectBird",
+  "devDependencies": {
+    "babelify": "^5.0.4",
+    "browserify": "^9.0.3",
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "through2": "^0.6.3"
+  }
+}
