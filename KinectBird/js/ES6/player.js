@@ -1,9 +1,9 @@
 const EASING = 0.1;
 const ONE_MINUS_EASING = 1.0 - EASING;
 
-export const DEAD = 0;
-export const PREPARING = 1;
-export const PLAYING = 2;
+export const DEAD = 'DEAD';
+export const PREPARING = 'PREPARING';
+export const PLAYING = 'PLAYING';
 
 export class Player {
   constructor (data, position) {
