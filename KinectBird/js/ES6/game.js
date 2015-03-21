@@ -19,23 +19,7 @@ export class Game {
   }
 
 
-  init(frameData) {
-    let self = this;
-
-    _.forEach(frameData, function (data) {
-      let player = new Player(data, {
-        x: self.state.width / 2.0,
-        y: self.state.height / 2.0
-      });
-      if (data.active) {
-        self.prepareGameFor(player);
-      } else {
-        player.state = INACTIVE;
-      }
-
-      self.state.players.push(player);
-      self.players[player.id] = player;
-    });
+  init() {
   }
 
 
@@ -53,6 +37,10 @@ export class Game {
     _.forEach(frameData, function (data) {
       let player = self.players[data.bodyId];
 
+      if (!player) {
+        self.createPlayer(data);
+      }
+
       if (data.active && player.state === INACTIVE) {
         self.prepareGameFor(player);
       }
@@ -61,6 +49,22 @@ export class Game {
         player.updateDataWith(data, self.state.gravity);
       }
     });
+  }
+
+
+  createPlayer(data) {
+    let player = new Player(data, {
+      x: this.state.width / 2.0,
+      y: this.state.height / 2.0
+    });
+    if (data.active) {
+      this.prepareGameFor(player);
+    } else {
+      player.state = INACTIVE;
+    }
+
+    this.state.players.push(player);
+    this.players[player.id] = player;
   }
 
 
