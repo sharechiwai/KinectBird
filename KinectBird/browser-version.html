@@ -30,41 +30,15 @@
           game = new Game(canvas),
           data = [
             {
-              point: { x: 0.5, y: 0.5 },
-              bodyId: 0,
-              active: false
-            },
-            {
-              point: { x: 0.5, y: 0.5 },
-              bodyId: 0,
-              active: false
-            },
-            {
-              point: { x: 0.5, y: 0.5 },
-              bodyId: 0,
-              active: false
-            },
-            {
-              point: { x: 0.5, y: 0.5 },
-              bodyId: 0,
-              active: false
-            },
-            {
-              point: { x: 0.5, y: 0.5 },
+              joint: { position: { x: 0.5, y: 0.5 } },
               bodyId: 5,
               active: false
-            },
-            {
-              point: { x: 0.5, y: 0.5 },
-              bodyId: 0,
-              active: false
-            },
+            }
           ];
 
 
-      var changingBody = data[4],
+      var changingBody = data[0],
           bump = 0,
-          tick = 0,
           report = document.getElementById('report');
 
       changingBody.active = true;
@@ -73,7 +47,7 @@
 
         if (bump > 0) {
           var taken = Math.round(5 + bump * 0.1);
-          changingBody.point.y += taken;
+          changingBody.joint.position.y += taken / 500.0;
           bump = bump - taken;
         }
         game.update(data);

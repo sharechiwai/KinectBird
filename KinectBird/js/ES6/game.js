@@ -54,7 +54,7 @@ export class Game {
     let player = new Player(data, {
       x: 0.0,
       y: 0.0
-    });
+    }, 0.05);
     this.prepareGameFor(player);
 
     this.state.players.push(player);
