@@ -1,0 +1,2 @@
+# KinectBird
+Experimental Kinect project
