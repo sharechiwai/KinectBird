@@ -11,11 +11,11 @@
 
     <!-- BodyBasics_HTML references -->
     <link href="/css/default.css" rel="stylesheet" />
+    <script src="./vendor/js/lodash.min.js"></script>
     <script src="./js/app.compiled.js"></script>
     <script src="/js/default.js"></script>
 </head>
 <body>
-
     <div id="header">
         <div id="logo1"><img src="images/kinectlogo.png" alt="Kinect for Windows" height="32" width="81"></div>
         <div id="logo2"><img src="images/Status.png" alt="Sensor Logo"></div>
@@ -26,13 +26,11 @@
     <button>Hello</button>
     <div id="canvas_container">
         <canvas id="mainCanvas" width="512" height="424"></canvas>
+        <canvas id="kinect-bird" width="512" height="424"></canvas>
     </div>
 
     <div id="ender">
         <div id="status"><p id="statustext">Running</p></div>
     </div>
-
-  
-
 </body>
 </html>

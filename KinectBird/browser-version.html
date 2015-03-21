@@ -6,18 +6,83 @@
 
     <!-- KinectBird references -->
     <link href="./css/default.css" rel="stylesheet" />
+
+    <style>
+      canvas#main-canvas {
+        width: 640px;
+        height: 480px;
+      }
+    </style>
 </head>
 <body>
 
-  <canvas id="main-canvas"></canvas>
+  <canvas id="main-canvas" width="640" height="480"></canvas>
 
+  <script src="./vendor/js/lodash.min.js"></script>
   <script src="./js/app.compiled.js"></script>
   <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function (event) {
       var canvas = document.getElementById('main-canvas'),
-          game = new Game(canvas);
+          game = new Game(canvas, 300, 300),
+          data = [
+            {
+              point: { x: 300.0, y: 300.0 },
+              bodyId: '1',
+              active: false
+            },
+            {
+              point: { x: 300.0, y: 300.0 },
+              bodyId: '2',
+              active: false
+            },
+            {
+              point: { x: 300.0, y: 300.0 },
+              bodyId: '3',
+              active: false
+            },
+            {
+              point: { x: 300.0, y: 300.0 },
+              bodyId: '4',
+              active: false
+            },
+            {
+              point: { x: 300.0, y: 300.0 },
+              bodyId: '5',
+              active: false
+            },
+            {
+              point: { x: 300.0, y: 300.0 },
+              bodyId: '6',
+              active: false
+            },
+          ];
 
-      console.log('Hello World');
+
+      var changingBody = data[4],
+          bump = 0,
+          tick = 0;
+
+      changingBody.active = true;
+      var gameTick = function () {
+        window.requestAnimationFrame(gameTick);
+
+        if (bump > 0) {
+          var taken = Math.round(5 + bump * 0.1);
+          changingBody.point.y += taken;
+          bump = bump - taken;
+        }
+        game.update(data);
+      };
+
+      window.onkeydown = function (event) {
+        if (bump < 0) {
+          bump = 0;
+        }
+        bump = bump + 20;
+      };
+
+      game.init(data);
+      window.requestAnimationFrame(gameTick);
     });
   </script>
 </body>

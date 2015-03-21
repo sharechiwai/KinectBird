@@ -4,7 +4,7 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
-(function () {
+(function (window, document, Game) {
     "use strict";
 
     WinJS.Binding.optimizeBindingReferences = true;
@@ -411,28 +411,29 @@
 
         button1Click: function (mouseEvent) {
             app.getBodyJoints();
-          
         }
     });
 
     app.getBodyJoints = function () {
-        var resultArray = []
+        var resultArray = [];
         for (var i = 0; i < bodies.length; i++) {
-
-            //   if (bodies[i].isTracked) {
-
-            var t = { bodyId: i, jointPoint: jointPoints[20], active: bodies[i].isTracked };
-            //console.log("" + i + ": " + bodies[i].joints);
-            //console.log(t)
+            var t = { bodyId: i, point: jointPoints[20], active: bodies[i].isTracked };
             resultArray.push(t);
-            //  }
+        }
 
-        };
-        console.log(resultArray);
-    }
+        return resultArray;
+    };
 
     app.start();
-})();
 
 
+    var canvas2 = document.getElementById('kinect-bird'),
+        game = new Game(canvas2, 1000, 500),
+        gameTick = function () {
+          window.requestAnimationFrame(gameTick);
 
+          game.update(app.getBodyJoints());
+        };
+
+    window.requestAnimationFrame(gameTick);
+})(window, document, Game);

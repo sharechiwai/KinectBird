@@ -35,10 +35,17 @@
 
 canvas {
     position: absolute;
-    left: 19.31%;
-    width: 61.37%;
+    width: 40%;
     height: 90%;
     background-color: black;
+}
+
+canvas#mainCanvas {
+    left: 5%;
+}
+
+canvas#kinect-bird {
+    right: 5%;
 }
 
 #ender {
