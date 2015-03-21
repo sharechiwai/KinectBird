@@ -38,7 +38,7 @@ export class Game {
       let player = self.players[data.bodyId];
 
       if (!player) {
-        self.createPlayer(data);
+        player = self.createPlayer(data);
       }
 
       if (data.active && player.state === INACTIVE) {
@@ -65,6 +65,8 @@ export class Game {
 
     this.state.players.push(player);
     this.players[player.id] = player;
+
+    return player;
   }
 
 
