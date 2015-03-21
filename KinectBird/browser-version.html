@@ -27,35 +27,35 @@
   <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function (event) {
       var canvas = document.getElementById('main-canvas'),
-          game = new Game(canvas, 300, 300),
+          game = new Game(canvas),
           data = [
             {
-              point: { x: 300.0, y: 300.0 },
+              point: { x: 0.5, y: 0.5 },
               bodyId: 0,
               active: false
             },
             {
-              point: { x: 300.0, y: 300.0 },
+              point: { x: 0.5, y: 0.5 },
               bodyId: 0,
               active: false
             },
             {
-              point: { x: 300.0, y: 300.0 },
+              point: { x: 0.5, y: 0.5 },
               bodyId: 0,
               active: false
             },
             {
-              point: { x: 300.0, y: 300.0 },
+              point: { x: 0.5, y: 0.5 },
               bodyId: 0,
               active: false
             },
             {
-              point: { x: 300.0, y: 300.0 },
+              point: { x: 0.5, y: 0.5 },
               bodyId: 5,
               active: false
             },
             {
-              point: { x: 300.0, y: 300.0 },
+              point: { x: 0.5, y: 0.5 },
               bodyId: 0,
               active: false
             },
@@ -82,7 +82,7 @@
         _.forEach(game.state.players, function (player) {
           text = text + 'Player ' + player.id + ', State: ' + player.state + '    ';
         });
-        report.innerText = text;
+        report.innerText = text + ' | Obstacles: ' + game.state.boxes.length;
       };
 
       window.onkeydown = function (event) {

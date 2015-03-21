@@ -3,13 +3,11 @@ import { Renderer } from './renderer.js';
 import { Box } from './box.js';
 
 export class Game {
-  constructor(canvas, width, height) {
+  constructor(canvas) {
     this.state = {
       tick: 0,
       timeToNextBlock: 50,
-      width: width,
-      height: height,
-      gravity: width * 0.0004,
+      gravity: 0.0004,
       players: [],
       boxes: []
     };
@@ -54,8 +52,8 @@ export class Game {
 
   createPlayer(data) {
     let player = new Player(data, {
-      x: this.state.width / 2.0,
-      y: this.state.height / 2.0
+      x: 0.0,
+      y: 0.0
     });
     this.prepareGameFor(player);
 
@@ -78,21 +76,21 @@ export class Game {
     let toRemoveList = [];
     for (let i = 0; i < state.boxes.length; i++) {
       let box = state.boxes[i];
-      box.position.x = box.position.x - state.width * 0.004;
-
-      if (box.position.x + box.halfWidth < 0) {
+      if (box.position.x + box.halfWidth < -0.5) {
         toRemoveList.push(i);
       }
+
+      box.position.x = box.position.x - 10.0 * state.gravity;
     }
 
     let toRemove = toRemoveList.pop();
     while (toRemove) {
-      state.boxes.splice(toRemove, 1);
+      state.boxes.splice(toRemove - 1, 1);
       toRemove = toRemoveList.pop();
     }
 
     _.forEach(state.players, function (player) {
-      if (player.state !== DEAD && (player.position.y < player.halfSize || player.position.y > self.state.height - player.halfSize)) {
+      if (player.state !== DEAD && (player.position.y < player.halfSize - 0.5 || player.position.y > 0.5 - player.halfSize)) {
         self.killPlayer(player);
         return;
       }
@@ -123,13 +121,15 @@ export class Game {
 
   prepareGameFor(player) {
     player.state = PREPARING;
-    player.position.x = this.state.width / 2.0;
-    player.position.y = this.state.height / 2.0;
+    player.position.x = 0.0;
+    player.position.y = 0.0;
     player.velocity.x = 0.0;
     player.velocity.y = 0.0;
 
     setTimeout(function () {
-      player.state = PLAYING;
+      if (player.state !== DEAD) {
+        player.state = PLAYING;
+      }
     }, 3000);
   }
 
@@ -145,15 +145,15 @@ export class Game {
     state.tick = 0;
     state.timeToNextBlock = Math.round(20 * Math.random() + 90);
 
-    let height = state.height * (0.4 * Math.random() + 0.3),
-        width = state.width / 15,
+    let height = 0.4 * Math.random() + 0.3,
+        width = 1.0 / 15.0,
         position = {
-          x: state.width + width,
-          y: height/2
+          x: 0.5 + width,
+          y: height/2 - 0.5
         };
 
     if (Math.random() > 0.5) {
-      position.y = state.height - position.y;
+      position.y = -position.y;
     }
     state.boxes.push(new Box(position, width, height));
   }

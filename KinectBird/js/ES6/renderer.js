@@ -14,10 +14,10 @@ export class Renderer {
     this.clear();
 
     context.scale(
-        this.canvas.width / gameState.width,
-        -this.canvas.height / gameState.height
+        this.canvas.width,
+        -this.canvas.height
     );
-    context.translate(0, -gameState.height);
+    context.translate(0.5, -0.5);
     this.renderBoxes(gameState.boxes);
     this.renderPlayers(gameState.players);
     context.restore();
