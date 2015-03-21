@@ -78,7 +78,7 @@ export class Game {
     let toRemoveList = [];
     for (let i = 0; i < state.boxes.length; i++) {
       let box = state.boxes[i];
-      box.position.x = box.position.x - 1.0;
+      box.position.x = box.position.x - state.width * 0.004;
 
       if (box.position.x + box.halfWidth < 0) {
         toRemoveList.push(i);
@@ -92,12 +92,12 @@ export class Game {
     }
 
     _.forEach(state.players, function (player) {
-      if (player.state === PLAYING) {
-        if (player.position.y < player.halfSize || player.position.y > self.state.height - player.halfSize) {
-          self.killPlayer(player);
-          return;
-        }
+      if (player.state !== DEAD && (player.position.y < player.halfSize || player.position.y > self.state.height - player.halfSize)) {
+        self.killPlayer(player);
+        return;
+      }
 
+      if (player.state === PLAYING) {
         _.any(state.boxes, function (box) {
           if (box.didCollideWith(player)) {
             self.killPlayer(player);
