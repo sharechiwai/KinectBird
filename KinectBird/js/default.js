@@ -372,6 +372,18 @@
                 // open the sensor
                 sensor.open();
 
+                var canvas2 = document.getElementById('kinect-bird'),
+                 game = new Game(canvas2, 1000, 500),
+                 gameTick = function () {
+                     window.requestAnimationFrame(gameTick);
+
+                     game.update(app.getBodyJoints());
+                 };
+
+                game.init(app.getBodyJoints());
+                window.requestAnimationFrame(gameTick);
+
+              
             } else {
                 // TODO: This application has been reactivated from suspension.
                 // Restore application state here.
@@ -417,8 +429,10 @@
     app.getBodyJoints = function () {
         var resultArray = [];
         for (var i = 0; i < bodies.length; i++) {
-            var t = { bodyId: i, point: jointPoints[20], active: bodies[i].isTracked };
-            resultArray.push(t);
+           // if (bodies[i] != null) {
+                var t = { bodyId: bodies[i].trackingId, point: jointPoints[20], active: bodies[i].isTracked };
+                resultArray.push(t);
+          //  }
         }
 
         return resultArray;
@@ -426,14 +440,5 @@
 
     app.start();
 
-
-    var canvas2 = document.getElementById('kinect-bird'),
-        game = new Game(canvas2, 1000, 500),
-        gameTick = function () {
-          window.requestAnimationFrame(gameTick);
-
-          game.update(app.getBodyJoints());
-        };
-
-    window.requestAnimationFrame(gameTick);
+   
 })(window, document, Game);
