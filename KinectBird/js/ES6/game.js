@@ -25,6 +25,7 @@ export class Game {
       players: [],
       boxes: [],
       stars: [],
+      particles: [],
       highestScore: {
         name: null,
         score: 0
@@ -195,6 +196,18 @@ export class Game {
         });
       }
     });
+
+    let i = state.particles.length;
+    while (i--) {
+      let particle = state.particles[i];
+
+      particle.vy -= 3.5 * state.gravity;
+      particle.x += particle.vx;
+      particle.y += particle.vy;
+      if (particle.y < -0.5) {
+        state.particles.splice(i, 1);
+      }
+    }
   }
 
 
@@ -206,6 +219,23 @@ export class Game {
     if (player.currentScore > player.highScore) {
       player.highScore = player.currentScore;
     }
+
+    let numParticles = Math.round(3 * Math.random() + 4);
+    for (let i = 0; i < numParticles; i++) {
+      let vx = Math.random() - 0.5,
+          vy = 2.0 * Math.random(),
+          v = 50 * Math.sqrt(vx*vx + vy*vy);
+
+      self.state.particles.push({
+        x: player.position.x + player.halfSize * (Math.random() - 0.5),
+        y: player.position.y + player.halfSize * (Math.random() - 0.5),
+        vx: vx / v,
+        vy: vy / v,
+        halfSize: player.halfSize / Math.sqrt(numParticles / 2),
+        color: player.color
+      });
+    }
+
     if (player.currentScore > self.state.highestScore.score) {
       self.state.highestScore.name = player.name;
       self.state.highestScore.score = player.currentScore;

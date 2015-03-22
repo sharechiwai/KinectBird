@@ -17,6 +17,17 @@ const COLORS = [
 const INTERFACE_TEXT_SCALING = 0.03;
 const INTERFACE_FONT = '1px Tahoma, Verdana, Segoe, sans-serif';
 
+var colorFor = function (index, alpha) {
+  'use strict';
+
+  let color = COLORS[index];
+  if (alpha) {
+    return 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',0.5)';
+  } else {
+    return 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
+  }
+};
+
 export class Renderer {
   constructor(canvas, options) {
     this.canvas = canvas;
@@ -40,6 +51,7 @@ export class Renderer {
     this.renderStars(gameState.stars);
     this.renderBoxes(gameState.boxes);
     this.renderPlayers(gameState.players);
+    this.renderParticles(gameState.particles);
     this.renderInterface(gameState);
     context.restore();
 
@@ -69,6 +81,8 @@ export class Renderer {
 
     context.fillStyle = '#FFFFFF';
     _.forEach(stars, function (star) {
+      let size = 0.15 * star.speed;
+      context.fillRect(star.x - size/2, star.y - size/2, size, size);
       context.beginPath();
       context.arc(star.x, star.y, 0.3 * star.speed, 0, 2*Math.PI);
       context.fill();
@@ -95,19 +109,17 @@ export class Renderer {
     var context = this.context;
 
     _.forEach(players, function (player, index) {
-      let color = COLORS[player.color];
-
       switch (player.state) {
         case DEAD:
           break;
 
         case CHECKING:
-          context.fillStyle = 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',0.5)';
+          context.fillStyle = colorFor(player.color, true);
           break;
 
         case PLAYING:
         case READY:
-          context.fillStyle = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
+          context.fillStyle = colorFor(player.color);
           break;
 
         default:
@@ -133,7 +145,7 @@ export class Renderer {
       }
 
       context.save();
-      context.fillStyle = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
+      context.fillStyle = colorFor(player.color);
       context.translate(player.position.x, -0.45);
       context.scale(INTERFACE_TEXT_SCALING, -INTERFACE_TEXT_SCALING);
       let width = context.measureText(player.currentScore).width;
@@ -141,12 +153,27 @@ export class Renderer {
       context.restore();
 
       context.save();
-      context.fillStyle = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
+      context.fillStyle = colorFor(player.color);
       context.translate(-0.48, 0.45 - (index + 2) * 0.05);
       context.scale(INTERFACE_TEXT_SCALING, -INTERFACE_TEXT_SCALING);
       let text = player.name + ': ' + player.highScore;
       context.fillText(text, 0.0, 0.0);
       context.restore();
+    });
+  }
+
+
+  renderParticles(particles) {
+    var context = this.context;
+
+    _.forEach(particles, function (particle) {
+      context.fillStyle = colorFor(particle.color);
+      context.fillRect(
+          particle.x - particle.halfSize,
+          particle.y - particle.halfSize,
+          2.0 * particle.halfSize,
+          2.0 * particle.halfSize
+      );
     });
   }
 
