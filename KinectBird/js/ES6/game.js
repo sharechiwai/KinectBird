@@ -10,8 +10,7 @@ const MAX_HOLE_SIZE = 0.5;
 const MIN_HOLE_SIZE = 0.35;
 const TICKS_TO_NEXT_PIPE = 90;
 const TIME_TO_WAIT_FOR_PLAYER_TO_BE_READY = 5000;
-const SECONDS_TO_START = 3;
-const SECONDS_TO_REST = 2;
+const SECONDS_TO_START = 5;
 const SECONDS_TO_RESPAWN = 3;
 const TICKS_TO_EXPIRE_PLAYER = 60;
 
@@ -91,6 +90,7 @@ export class Game {
 
         if (player.state !== CHECKING) {
           let oldVel = player.velocityY;
+          player.restingPeriod += 1;
 
           player.stepTime(self.state.gravity);
 
@@ -203,21 +203,8 @@ export class Game {
       player.highScore = player.currentScore;
     }
 
-    var callback = function () {
-      player.overheadText -= 1;
-
-      if (player.overheadText > SECONDS_TO_START) {
-        self.scheduleEventForPlayer(player, callback, 1000);
-      } else {
-        self.prepareGameFor(player);
-      }
-    };
-
     self.scheduleEventForPlayer(player, function () {
-      player.reset();
-      player.state = CHECKING;
-      player.overheadText = SECONDS_TO_REST + SECONDS_TO_START;
-      self.scheduleEventForPlayer(player, callback, 1000);
+      self.prepareGameFor(player);
     }, 1000 * SECONDS_TO_RESPAWN);
   }
 

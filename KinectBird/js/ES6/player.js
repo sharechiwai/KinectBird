@@ -20,6 +20,7 @@ export class Player {
     this.state = CHECKING;
     this.age = 0;
     this.livingPeriod = 0;
+    this.restingPeriod = 0;
 
     this.color = color;
     this.overheadText = null;
@@ -41,7 +42,8 @@ export class Player {
 
 
   stepTime(gravity) {
-    this.velocityY += this.lastDiffY - gravity;
+    let scaledGravity = (this.restingPeriod > 600) ? gravity : Math.pow(this.restingPeriod / 600, 2) * gravity;
+    this.velocityY += this.lastDiffY - scaledGravity;
 
     if (this.velocityY > 0.0) {
       this.velocityY = ONE_MINUS_EASING * this.velocityY;
@@ -57,5 +59,6 @@ export class Player {
     this.lastDiffY = 0.0;
     this.currentScore = 0;
     this.livingPeriod = 0;
+    this.restingPeriod = 0;
   }
 }
