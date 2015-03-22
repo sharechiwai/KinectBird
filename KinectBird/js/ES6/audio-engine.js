@@ -1,8 +1,8 @@
 export const BACKGROUND_MUSIC = './audio/flappy-background.wav';
 export const JUMP = [
-  './audio/jump.wav',
-  './audio/jump.wav',
-  './audio/jump.wav',
+  './audio/player2.wav',
+  './audio/player1.wav',
+  './audio/jump-small.wav',
   './audio/jump.wav',
   './audio/jump.wav',
   './audio/jump.wav'
