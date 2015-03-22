@@ -2,18 +2,18 @@ export const BACKGROUND_MUSIC = './audio/flappy-background.wav';
 export const JUMP = [
   './audio/player2.wav',
   './audio/player1.wav',
-  './audio/jump-small.wav',
-  './audio/jump.wav',
-  './audio/jump.wav',
-  './audio/jump.wav'
+  './audio/player3.wav',
+  './audio/player4.wav',
+  './audio/player5.wav',
+  './audio/player6.wav'
 ];
 export const DEATH = [
-  './audio/smb_mariodie.wav',
-  './audio/smb_mariodie.wav',
-  './audio/smb_mariodie.wav',
-  './audio/smb_mariodie.wav',
-  './audio/smb_mariodie.wav',
-  './audio/smb_mariodie.wav'
+  './audio/crashing.wav',
+  './audio/crashing.wav',
+  './audio/crashing.wav',
+  './audio/crashing.wav',
+  './audio/crashing.wav',
+  './audio/crashing\.wav'
 ];
 
 export class AudioEngine {
