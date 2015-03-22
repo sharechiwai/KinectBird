@@ -2,10 +2,30 @@ const EASING = 0.1;
 const ONE_MINUS_EASING = 1.0 - EASING;
 const SCALING = 0.3;
 
+const REST_PERIOD = 600;
 export const DEAD = 'DEAD';
 export const CHECKING = 'CHECKING';
 export const READY = 'READY';
 export const PLAYING = 'PLAYING';
+
+const ANIMALS = ['tiger', 'lion', 'bird', 'rat', 'cat', 'dog', 'fish', 'eagle', 'bug', 'ant', 'monkey', 'turtle', 'clam'];
+
+var usedNames = [],
+    generateName = function () {
+      'use strict';
+
+      return ANIMALS[Math.round(Math.random() * ANIMALS.length) % ANIMALS.length] + '-' + Math.round(Math.random() * 98.9);
+    },
+    generateUniqueName = function () {
+      'use strict';
+
+      var name = generateName();
+      while (usedNames.indexOf(name) !== -1) {
+        name = generateName();
+      }
+
+      return name;
+    };
 
 export class Player {
   constructor (data, position, size, color) {
@@ -27,6 +47,8 @@ export class Player {
 
     this.currentScore = 0;
     this.highScore = 0;
+
+    this.name = generateUniqueName();
   }
 
   updateDataWith(data) {
@@ -42,7 +64,7 @@ export class Player {
 
 
   stepTime(gravity) {
-    let scaledGravity = (this.restingPeriod > 600) ? gravity : Math.pow(this.restingPeriod / 600, 2) * gravity;
+    let scaledGravity = (this.restingPeriod > REST_PERIOD) ? gravity : Math.pow(this.restingPeriod / REST_PERIOD, 2) * gravity;
     this.velocityY += this.lastDiffY - scaledGravity;
 
     if (this.velocityY > 0.0) {
