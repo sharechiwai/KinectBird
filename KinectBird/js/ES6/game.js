@@ -15,7 +15,8 @@ const RESPAWN_TIME = 3000;
 const TICKS_TO_EXPIRE_PLAYER = 60;
 
 export class Game {
-  constructor(canvas) {
+  constructor(canvas, options) {
+    options = options || {};
     this.state = {
       tick: 0,
       timeToNextBlock: 50,
@@ -26,7 +27,9 @@ export class Game {
     };
 
     this.players = {};
-    this.renderer = new Renderer(canvas);
+    this.renderer = new Renderer(canvas, {
+      kinect: options.kinect
+    });
     this.audioEngine = new AudioEngine();
 
     this.availableSlots = [-0.3, 0.3, -0.2, 0.2, -0.1, 0.1, 0.0];

@@ -1,9 +1,10 @@
 import { DEAD, CHECKING, READY, PLAYING } from './player.js';
+import { KinectBodyRenderer } from './kinect-body-renderer.js';
 
 const FOREGROUND_COLOR = '#FFFFFF';
 const BACKGROUND_COLOR = '#555555';
 const PIPE_COLOR = '#333333';
-const COLORS = [
+export const COLORS = [
   [255, 255, 255],
   [255, 0, 0],
   [0, 255, 0],
@@ -17,9 +18,13 @@ const INTERFACE_TEXT_SCALING = 0.03;
 const INTERFACE_FONT = '1px Tahoma, Verdana, Segoe, sans-serif';
 
 export class Renderer {
-  constructor(canvas) {
+  constructor(canvas, options) {
     this.canvas = canvas;
     this.context = canvas.getContext('2d');
+
+    if (options.kinect) {
+      this.kinectBodyRenderer = new KinectBodyRenderer(this.context, options.kinect);
+    }
   }
 
 
@@ -36,6 +41,13 @@ export class Renderer {
     this.renderPlayers(gameState.players);
     this.renderInterface();
     context.restore();
+
+    if (this.kinectBodyRenderer) {
+      context.save();
+      this.kinectBodyRenderer.clear();
+      this.kinectBodyRenderer.renderBodiesFromPlayers(gameState.players);
+      context.restore();
+    }
   }
 
 

@@ -85,7 +85,11 @@
     "predef": [
       "_",
       "require",
-      "module"
+      "module",
+      "WinJS",
+      "Windows",
+      "WindowsPreview",
+      "KinectImageProcessor"
     ],
 
     // Custom Globals

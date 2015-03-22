@@ -84,39 +84,6 @@
             dataReceived = true;
             bodyFrame.close();
         }
-
-        /*Draw Body Code*/
-        if (dataReceived) {
-            // clear canvas before drawing each frame
-            bodyContext.clearRect(0, 0, bodyCanvas.width, bodyCanvas.height);
-
-            // iterate through each body
-            for (var bodyIndex = 0; bodyIndex < bodies.length; ++bodyIndex) {
-                var body = bodies[bodyIndex];
-
-                // look for tracked bodies
-                if (body.isTracked) {
-                    // get joints collection
-                    var joints = body.joints;
-                    // allocate space for storing joint locations
-                    var jointPoints = createJointPoints();
-
-                    // call native component to map all joint locations to depth space
-                    if (bodyImageProcessor.processJointLocations(joints, jointPoints)) {
-
-                        // draw the body
-                        drawBody(joints, jointPoints, bodyColors[bodyIndex]);
-
-                        // draw handstate circles
-                        updateHandState(body.handLeftState, jointPoints[kinect.JointType.handLeft]);
-                        updateHandState(body.handRightState, jointPoints[kinect.JointType.handRight]);
-
-                        // draw clipped edges if any
-                        drawClippedEdges(body);
-                    }
-                }
-            }
-        }
     }
 
     // Body Start
@@ -265,40 +232,6 @@
     var populateBones = function () {
         var bones = new Array();
 
-        // torso
-        bones.push({ jointStart: kinect.JointType.head, jointEnd: kinect.JointType.neck });
-        bones.push({ jointStart: kinect.JointType.neck, jointEnd: kinect.JointType.spineShoulder });
-        bones.push({ jointStart: kinect.JointType.spineShoulder, jointEnd: kinect.JointType.spineMid });
-        bones.push({ jointStart: kinect.JointType.spineMid, jointEnd: kinect.JointType.spineBase });
-        bones.push({ jointStart: kinect.JointType.spineShoulder, jointEnd: kinect.JointType.shoulderRight });
-        bones.push({ jointStart: kinect.JointType.spineShoulder, jointEnd: kinect.JointType.shoulderLeft });
-        bones.push({ jointStart: kinect.JointType.spineBase, jointEnd: kinect.JointType.hipRight });
-        bones.push({ jointStart: kinect.JointType.spineBase, jointEnd: kinect.JointType.hipLeft });
-
-        // right arm
-        bones.push({ jointStart: kinect.JointType.shoulderRight, jointEnd: kinect.JointType.elbowRight });
-        bones.push({ jointStart: kinect.JointType.elbowRight, jointEnd: kinect.JointType.wristRight });
-        bones.push({ jointStart: kinect.JointType.wristRight, jointEnd: kinect.JointType.handRight });
-        bones.push({ jointStart: kinect.JointType.handRight, jointEnd: kinect.JointType.handTipRight });
-        bones.push({ jointStart: kinect.JointType.wristRight, jointEnd: kinect.JointType.thumbRight });
-
-        // left arm
-        bones.push({ jointStart: kinect.JointType.shoulderLeft, jointEnd: kinect.JointType.elbowLeft });
-        bones.push({ jointStart: kinect.JointType.elbowLeft, jointEnd: kinect.JointType.wristLeft });
-        bones.push({ jointStart: kinect.JointType.wristLeft, jointEnd: kinect.JointType.handLeft });
-        bones.push({ jointStart: kinect.JointType.handLeft, jointEnd: kinect.JointType.handTipLeft });
-        bones.push({ jointStart: kinect.JointType.wristLeft, jointEnd: kinect.JointType.thumbLeft });
-
-        // right leg
-        bones.push({ jointStart: kinect.JointType.hipRight, jointEnd: kinect.JointType.kneeRight });
-        bones.push({ jointStart: kinect.JointType.kneeRight, jointEnd: kinect.JointType.ankleRight });
-        bones.push({ jointStart: kinect.JointType.ankleRight, jointEnd: kinect.JointType.footRight });
-
-        // left leg
-        bones.push({ jointStart: kinect.JointType.hipLeft, jointEnd: kinect.JointType.kneeLeft });
-        bones.push({ jointStart: kinect.JointType.kneeLeft, jointEnd: kinect.JointType.ankleLeft });
-        bones.push({ jointStart: kinect.JointType.ankleLeft, jointEnd: kinect.JointType.footLeft });
-
         return bones;
     }
 
@@ -335,11 +268,6 @@
                 // create bodies array
                 bodies = new Array(sensor.bodyFrameSource.bodyCount);
 
-                // Body Start
-
-                // create bones
-                bones = populateBones();
-
                 // set number of joints and bones
                 jointCount = kinect.Body.jointCount;
                 boneCount = bones.length;
@@ -369,7 +297,7 @@
 
                 var jointText = document.getElementById('jointInfo');
                 var canvas2 = document.getElementById('kinect-bird'),
-                 game = new Game(canvas2),
+                 game = new Game(canvas2, { kinect: kinect }),
                  gameTick = function () {
                      window.requestAnimationFrame(gameTick);
 
@@ -435,7 +363,7 @@
         for (var i = 0; i < bodies.length; i++) {
             var body = bodies[i];
             if (body != null && body.trackingId !== 0) {
-                var t = { bodyId: body.trackingId, joint: body.joints.lookup(20), active: body.isTracked };
+              var t = { bodyId: body.trackingId, object: body, joint: body.joints.lookup(20), active: body.isTracked };
                 resultArray.push(t);
             }
         }
