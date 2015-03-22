@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="audio\congrad.wav" />
+    <Content Include="audio\flappy-background.wav" />
     <Content Include="audio\jump-small.wav" />
     <Content Include="audio\jump.wav" />
     <Content Include="audio\letsgo.wav" />
@@ -67,6 +68,8 @@
     <Content Include="audio\mario_phew_2.wav" />
     <Content Include="audio\mk64_announcer11-jp.wav" />
     <Content Include="audio\npc-yc_mario-lose.wav" />
+    <Content Include="audio\player-left.wav" />
+    <Content Include="audio\player-right.wav" />
     <Content Include="audio\smb_mariodie.wav" />
     <Content Include="audio\smsunshine_talk_end.wav" />
     <Content Include="audio\taosmb3_intro.mp3" />
@@ -80,6 +83,7 @@
     <Content Include="js\app.compiled.js" />
     <Content Include="js\default.js" />
     <Content Include="css\default.css" />
+    <Content Include="js\ES6\audio-engine.js" />
     <Content Include="js\ES6\box.js" />
     <Content Include="js\ES6\game.js" />
     <Content Include="js\ES6\init.js" />

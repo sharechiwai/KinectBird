@@ -1,4 +1,4 @@
-export const BACKGROUND_MUSIC = './audio/mario.wav';
+export const BACKGROUND_MUSIC = './audio/flappy-background.wav';
 export const JUMP = './audio/jump.wav';
 export const DEATH = './audio/smb_mariodie.wav';
 
