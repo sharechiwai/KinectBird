@@ -3,10 +3,10 @@ import { Renderer } from './renderer.js';
 import { Box } from './box.js';
 
 const SPEED = 0.005;
-const GRAVITY = 0.0002;
+const GRAVITY = 0.0003;
 const PIPE_WIDTH = 1.0 / 15.0;
-const MAX_HOLE_SIZE = 0.4;
-const MIN_HOLE_SIZE = 0.2;
+const MAX_HOLE_SIZE = 0.5;
+const MIN_HOLE_SIZE = 0.35
 const TIME_TO_NEXT_PIPE = 90;
 
 export class Game {
