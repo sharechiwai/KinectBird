@@ -62,7 +62,6 @@ export class Renderer {
 
     _.forEach(players, function (player) {
       let color = COLORS[player.color];
-      console.log(player.color);
 
       switch (player.state) {
         case DEAD:

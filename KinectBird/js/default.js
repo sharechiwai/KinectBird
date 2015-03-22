@@ -122,6 +122,7 @@
         for (var i = 0; i < bodies.length; i++) {
             var body = bodies[i];
             if (body != null && body.trackingId !== 0) {
+                console.log(body.joints.lookup(20).trackingState)
                 var t = { bodyId: body.trackingId, joint: body.joints.lookup(20), active: body.isTracked };
                 resultArray.push(t);
             }
