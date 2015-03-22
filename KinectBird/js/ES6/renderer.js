@@ -68,7 +68,6 @@ export class Renderer {
           throw 'Invalid state!';
       }
 
-      console.log(player);
       context.fillRect(
         player.position.x - player.halfSize,
         player.position.y - player.halfSize,
