@@ -16,10 +16,12 @@ export class Player {
     this.lastDataPositionY = data.joint.position.y;
     this.position = _.clone(position);
     this.updateDataWith(data, 0.0);
-    this.color = color;
 
     this.state = CHECKING;
     this.age = 0;
+
+    this.color = color;
+    this.overheadText = null;
   }
 
   updateDataWith(data) {

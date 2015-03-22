@@ -25,6 +25,7 @@ export class Renderer {
     context.save();
     this.clear();
 
+    context.font = '1px comic sans';
     context.scale(this.canvas.width, -this.canvas.height);
     context.translate(0.5, -0.5);
     this.renderBoxes(gameState.boxes);
@@ -68,11 +69,11 @@ export class Renderer {
           return;
 
         case CHECKING:
-        case READY:
           context.fillStyle = 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',0.5)';
           break;
 
         case PLAYING:
+        case READY:
           context.fillStyle = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
           break;
 
@@ -86,6 +87,15 @@ export class Renderer {
         2.0 * player.halfSize,
         2.0 * player.halfSize
       );
+
+      if (player.overheadText) {
+        context.save();
+        context.translate(player.position.x, player.position.y);
+        context.scale(0.1, -0.1);
+        let width = context.measureText(player.overheadText).width;
+        context.fillText(player.overheadText, -width / 2.0, -0.7);
+        context.restore();
+      }
     });
   }
 }

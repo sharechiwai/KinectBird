@@ -9,7 +9,7 @@ const MAX_HOLE_SIZE = 0.5;
 const MIN_HOLE_SIZE = 0.35;
 const TICKS_TO_NEXT_PIPE = 90;
 const TIME_TO_WAIT_FOR_PLAYER_TO_BE_READY = 5000;
-const TIME_TO_WAIT_FOR_PLAYER_TO_START_FROM_READY = 3000;
+const SECONDS_TO_START = 3;
 const RESPAWN_TIME = 3000;
 
 export class Game {
@@ -92,13 +92,12 @@ export class Game {
         }, 0.05, this.availableColors.pop());
 
     player.state = CHECKING;
+    player.overheadText = '?';
 
     this.state.players.push(player);
     this.players[player.id] = player;
 
-    console.log('CREATING');
     this.scheduleEventForPlayer(player, function () {
-      console.log('DONE');
       if (self.players[player.id]) {
         self.prepareGameFor(player);
       }
@@ -178,13 +177,25 @@ export class Game {
   prepareGameFor(player) {
     let self = this;
     player.state = READY;
+    player.overheadText = SECONDS_TO_START;
     player.reset();
 
-    this.scheduleEventForPlayer(player, function () {
+    var callback = function () {
       if (self.players[player.id] && player.state !== DEAD) {
-        player.state = PLAYING;
+        if (--player.overheadText) {
+          self.scheduleEventForPlayer(player, callback, 1000);
+        } else {
+          player.state = PLAYING;
+          player.overheadText = 'GO';
+
+          self.scheduleEventForPlayer(player, function () {
+            player.overheadText = null;
+          }, 1000);
+        }
       }
-    }, TIME_TO_WAIT_FOR_PLAYER_TO_START_FROM_READY);
+    };
+
+    self.scheduleEventForPlayer(player, callback, 1000);
   }
 
 
