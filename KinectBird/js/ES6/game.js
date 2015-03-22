@@ -7,6 +7,7 @@ const GRAVITY = 0.0002;
 const PIPE_WIDTH = 1.0 / 15.0;
 const MAX_HOLE_SIZE = 0.4;
 const MIN_HOLE_SIZE = 0.2;
+const TIME_TO_NEXT_PIPE = 90;
 
 export class Game {
   constructor(canvas) {
@@ -172,7 +173,7 @@ export class Game {
     var state = this.state;
 
     state.tick = 0;
-    state.timeToNextBlock = Math.round(20 * Math.random() + 90);
+    state.timeToNextBlock = Math.round(TIME_TO_NEXT_PIPE * Math.random() / 3.3 + TIME_TO_NEXT_PIPE);
 
     let size = (MAX_HOLE_SIZE - MIN_HOLE_SIZE) * Math.random() + MIN_HOLE_SIZE,
         pos = {
