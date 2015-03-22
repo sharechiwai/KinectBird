@@ -11,7 +11,8 @@ const MIN_HOLE_SIZE = 0.35;
 const TICKS_TO_NEXT_PIPE = 90;
 const TIME_TO_WAIT_FOR_PLAYER_TO_BE_READY = 5000;
 const SECONDS_TO_START = 3;
-const RESPAWN_TIME = 3000;
+const SECONDS_TO_REST = 2;
+const SECONDS_TO_RESPAWN = 3;
 const TICKS_TO_EXPIRE_PLAYER = 60;
 
 export class Game {
@@ -180,9 +181,23 @@ export class Game {
     if (player.currentScore > player.highScore) {
       player.highScore = player.currentScore;
     }
+
+    var callback = function () {
+      player.overheadText -= 1;
+
+      if (player.overheadText > SECONDS_TO_START) {
+        self.scheduleEventForPlayer(player, callback, 1000);
+      } else {
+        self.prepareGameFor(player);
+      }
+    };
+
     self.scheduleEventForPlayer(player, function () {
-      self.prepareGameFor(player);
-    }, RESPAWN_TIME);
+      player.reset();
+      player.state = CHECKING;
+      player.overheadText = SECONDS_TO_REST + SECONDS_TO_START;
+      self.scheduleEventForPlayer(player, callback, 1000);
+    }, 1000 * SECONDS_TO_RESPAWN);
   }
 
 
