@@ -12,6 +12,7 @@ const TICKS_TO_NEXT_PIPE = 90;
 const TIME_TO_WAIT_FOR_PLAYER_TO_BE_READY = 5000;
 const SECONDS_TO_START = 3;
 const RESPAWN_TIME = 3000;
+const TICKS_TO_EXPIRE_PLAYER = 60;
 
 export class Game {
   constructor(canvas) {
@@ -88,7 +89,7 @@ export class Game {
           }
         }
 
-        if (player.age > 10) {
+        if (player.age > TICKS_TO_EXPIRE_PLAYER) {
           self.removePlayer(player);
         }
       }
