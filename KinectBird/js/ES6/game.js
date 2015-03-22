@@ -100,7 +100,7 @@ export class Game {
           }
 
           if (oldVel < 0.0 && player.velocityY > 0.0) {
-            self.audioEngine.play(JUMP);
+            self.audioEngine.play(JUMP[i % 6]);
           }
         }
 
@@ -198,7 +198,7 @@ export class Game {
     var self = this;
 
     player.state = DEAD;
-    self.audioEngine.play(DEATH);
+    self.audioEngine.play(DEATH[self.state.players.indexOf(player) % 6]);
     if (player.currentScore > player.highScore) {
       player.highScore = player.currentScore;
     }

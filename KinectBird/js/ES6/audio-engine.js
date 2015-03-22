@@ -1,14 +1,38 @@
 export const BACKGROUND_MUSIC = './audio/flappy-background.wav';
-export const JUMP = './audio/jump.wav';
-export const DEATH = './audio/smb_mariodie.wav';
+export const JUMP = [
+  './audio/jump.wav',
+  './audio/jump.wav',
+  './audio/jump.wav',
+  './audio/jump.wav',
+  './audio/jump.wav',
+  './audio/jump.wav'
+];
+export const DEATH = [
+  './audio/smb_mariodie.wav',
+  './audio/smb_mariodie.wav',
+  './audio/smb_mariodie.wav',
+  './audio/smb_mariodie.wav',
+  './audio/smb_mariodie.wav',
+  './audio/smb_mariodie.wav'
+];
 
 export class AudioEngine {
   constructor() {
     let self = this,
         audioObjects = [
           { src: BACKGROUND_MUSIC, bg: true },
-          { src: JUMP, poolSize: 4 },
-          { src: DEATH, poolSize: 4 }
+          { src: JUMP[0] },
+          { src: JUMP[1] },
+          { src: JUMP[2] },
+          { src: JUMP[3] },
+          { src: JUMP[4] },
+          { src: JUMP[5] },
+          { src: DEATH[0] },
+          { src: DEATH[1] },
+          { src: DEATH[2] },
+          { src: DEATH[3] },
+          { src: DEATH[4] },
+          { src: DEATH[5] }
         ];
 
     self.htmlElement = document.createElement('div');
