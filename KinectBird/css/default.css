@@ -33,20 +33,15 @@
    padding-top: 5px;
 }
 
-canvas {
-    position: absolute;
-    width: 80%;
-    height: 90%;
-    background-color: black;
-}
-
-canvas#mainCanvas {
-    left: 5%;
-    display: none;
-}
-
 canvas#kinect-bird {
-    right: 5%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
 }
 
 #ender {

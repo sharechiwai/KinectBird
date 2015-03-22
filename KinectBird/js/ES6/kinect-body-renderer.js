@@ -1,8 +1,15 @@
-import { COLORS } from './renderer.js';
-
 const BACKGROUND_COLOR = '#000000';
 const INFERREDBONETHICKNESS = 1;
 const TRACKEDBONETHICKNESS = 4;
+const COLORS = [
+  [255, 255, 255],
+  [255, 0, 0],
+  [0, 255, 0],
+  [0, 0, 255],
+  [255, 255, 0],
+  [255, 0, 255],
+  [0, 255, 255]
+];
 
 export class KinectBodyRenderer {
   constructor(context, kinect) {
@@ -53,12 +60,12 @@ export class KinectBodyRenderer {
   }
 
 
-  clear() {
+  clear(width, height) {
     let context = this.context;
 
-    context.clearRect(0, 0, 1.0, 1.0);
+    context.clearRect(0, 0, width, height);
     context.fillStyle = BACKGROUND_COLOR;
-    context.fillRect(0, 0, 1.0, 1.0);
+    context.fillRect(0, 0, width, height);
   }
 
 
@@ -66,7 +73,7 @@ export class KinectBodyRenderer {
     let self = this;
 
     _.forEach(players, function (player) {
-      let joints = player.object.joints;
+      let joints = player.rawObject.joints;
       if (KinectImageProcessor.BodyHelper.processJointLocations(joints, self.jointPointsCache)) {
         self.renderBody(joints, self.jointPointsCache, COLORS[player.color]);
       }
@@ -98,7 +105,8 @@ export class KinectBodyRenderer {
         boneThickness = TRACKEDBONETHICKNESS;
       }
 
-      this.drawBone(jointPoints[boneStart], jointPoints[boneEnd], boneThickness, color);
+      var bodyColor = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
+      this.drawBone(jointPoints[boneStart], jointPoints[boneEnd], boneThickness, bodyColor);
     }
   }
 

@@ -32,6 +32,7 @@ export class Player {
     let point = data.joint.position,
         dy = Math.max(SCALING * (point.y - this.lastDataPositionY), 0.0);
 
+    this.rawObject = data.object;
     this.lastDiffY = ONE_MINUS_EASING * this.lastDiffY + EASING * dy;
     this.lastDataPositionY = point.y;
 

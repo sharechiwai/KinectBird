@@ -268,16 +268,6 @@
                 // create bodies array
                 bodies = new Array(sensor.bodyFrameSource.bodyCount);
 
-                // set number of joints and bones
-                jointCount = kinect.Body.jointCount;
-                boneCount = bones.length;
-
-                // get canvas objects
-                bodyCanvas = document.getElementById("mainCanvas");
-                bodyCanvas.width = depthFrameDescription.width;;
-                bodyCanvas.height = depthFrameDescription.height;;
-                bodyContext = bodyCanvas.getContext("2d");
-
                 // set body colors for each unique body
                 bodyColors = [
                     "red",
