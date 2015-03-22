@@ -24,7 +24,11 @@ export class Game {
       speed: SPEED,
       players: [],
       boxes: [],
-      stars: []
+      stars: [],
+      highestScore: {
+        name: null,
+        score: 0
+      }
     };
 
     this.players = {};
@@ -201,6 +205,10 @@ export class Game {
     self.audioEngine.play(DEATH[self.state.players.indexOf(player) % 6]);
     if (player.currentScore > player.highScore) {
       player.highScore = player.currentScore;
+    }
+    if (player.currentScore > self.state.highestScore.score) {
+      self.state.highestScore.name = player.name;
+      self.state.highestScore.score = player.currentScore;
     }
 
     self.scheduleEventForPlayer(player, function () {

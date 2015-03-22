@@ -10,13 +10,47 @@ export const CHECKING = 'CHECKING';
 export const READY = 'READY';
 export const PLAYING = 'PLAYING';
 
-const ANIMALS = ['tiger', 'lion', 'bird', 'rat', 'cat', 'dog', 'fish', 'eagle', 'bug', 'ant', 'monkey', 'turtle', 'clam'];
+const PREFIXES = [
+  'seething',
+  'angry',
+  'wild',
+  'peaceful',
+  'zodiac',
+  'winter',
+  'spring',
+  'summer',
+  'autumn',
+  'glowing',
+  'wispy'
+];
+
+const ANIMALS = [
+  'tiger',
+  'lion',
+  'bird',
+  'rat',
+  'cat',
+  'dog',
+  'fish',
+  'eagle',
+  'bug',
+  'ant',
+  'monkey',
+  'turtle',
+  'clam',
+  'spider',
+  'butterfly',
+  'bee'
+];
 
 var usedNames = [],
     generateName = function () {
       'use strict';
 
-      return ANIMALS[Math.round(Math.random() * ANIMALS.length) % ANIMALS.length] + '-' + Math.round(Math.random() * 98.9);
+      return [
+        PREFIXES[Math.round(Math.random() * PREFIXES.length) % PREFIXES.length],
+        ANIMALS[Math.round(Math.random() * ANIMALS.length) % ANIMALS.length]
+      ].join('-');
     },
     generateUniqueName = function () {
       'use strict';

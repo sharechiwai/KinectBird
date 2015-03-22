@@ -40,7 +40,7 @@ export class Renderer {
     this.renderStars(gameState.stars);
     this.renderBoxes(gameState.boxes);
     this.renderPlayers(gameState.players);
-    this.renderInterface();
+    this.renderInterface(gameState);
     context.restore();
 
     if (this.kinectBodyRenderer) {
@@ -94,7 +94,7 @@ export class Renderer {
   renderPlayers(players) {
     var context = this.context;
 
-    _.forEach(players, function (player) {
+    _.forEach(players, function (player, index) {
       let color = COLORS[player.color];
 
       switch (player.state) {
@@ -134,44 +134,49 @@ export class Renderer {
 
       context.save();
       context.fillStyle = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
-      context.translate(player.position.x, -0.4);
-
-      context.save();
+      context.translate(player.position.x, -0.45);
       context.scale(INTERFACE_TEXT_SCALING, -INTERFACE_TEXT_SCALING);
-      let width = context.measureText(player.highScore).width;
-      context.fillText(player.highScore, -width / 2.0, 0.0);
-      context.restore();
-
-      context.translate(0.0, -0.05);
-      context.save();
-      context.scale(INTERFACE_TEXT_SCALING, -INTERFACE_TEXT_SCALING);
-      width = context.measureText(player.currentScore).width;
+      let width = context.measureText(player.currentScore).width;
       context.fillText(player.currentScore, -width / 2.0, 0.0);
       context.restore();
+
+      context.save();
+      context.fillStyle = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
+      context.translate(-0.48, 0.45 - (index + 2) * 0.05);
+      context.scale(INTERFACE_TEXT_SCALING, -INTERFACE_TEXT_SCALING);
+      let text = player.name + ': ' + player.highScore;
+      context.fillText(text, 0.0, 0.0);
       context.restore();
     });
   }
 
 
-  renderInterface() {
+  renderInterface(gameState) {
     let context = this.context;
     context.fillStyle = FOREGROUND_COLOR;
 
     context.save();
-    context.translate(-0.45, -0.4);
-
-    context.save();
+    context.translate(-0.45, -0.45);
     context.scale(INTERFACE_TEXT_SCALING, -INTERFACE_TEXT_SCALING);
-    let width = context.measureText('High Score').width;
-    context.fillText('High Score', 0.0, 0.0);
-    context.restore();
-
-    context.translate(0.0, -0.05);
-    context.save();
-    context.scale(INTERFACE_TEXT_SCALING, -INTERFACE_TEXT_SCALING);
-    width = context.measureText('Score').width;
     context.fillText('Score', 0.0, 0.0);
     context.restore();
+
+    context.save();
+    context.fillStyle = '#FFFFFF';
+    context.translate(-0.48, 0.47);
+
+    context.save();
+    context.scale(INTERFACE_TEXT_SCALING, -INTERFACE_TEXT_SCALING);
+    if (gameState.highestScore.name) {
+      context.fillText('Champion: ' + gameState.highestScore.score + ' [' + gameState.highestScore.name + ']', 0.0, 0.0);
+    } else {
+      context.fillText('Champion: [to be claimed]', 0.0, 0.0);
+    }
+    context.restore();
+
+    context.translate(0.0, -0.07);
+    context.scale(INTERFACE_TEXT_SCALING, -INTERFACE_TEXT_SCALING);
+    context.fillText('High Scores', 0.0, 0.0);
     context.restore();
   }
 }
