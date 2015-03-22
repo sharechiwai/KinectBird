@@ -1,7 +1,7 @@
 const EASING = 0.1;
 const ONE_MINUS_EASING = 1.0 - EASING;
 // lower jump harder
-const SCALING = 0.175;
+const SCALING = 0.19;
 
 // Lower the quicker
 const REST_PERIOD = 335;
