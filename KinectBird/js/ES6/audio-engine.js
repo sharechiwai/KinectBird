@@ -68,13 +68,13 @@ export class AudioEngine {
     while (i--) {
       let audio = elements[i];
       if (audio.paused) {
-        audio.currentTime = 0;
+          audio.stop();
         audio.play();
         return;
       }
     }
 
-    elements[0].currentTime = 0;
+    elements[0].stop();
     elements[0].play();
   }
 }
