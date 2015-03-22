@@ -1,6 +1,6 @@
 const EASING = 0.1;
 const ONE_MINUS_EASING = 1.0 - EASING;
-const SCALING = 0.1;
+const SCALING = 0.2;
 
 export const DEAD = 'DEAD';
 export const PREPARING = 'PREPARING';

@@ -136,14 +136,12 @@
 
     // Draw a body
     var drawBody = function (joints, jointPoints, bodyColor) {
-
-        var jointText = document.getElementById('jointInfo');
+        return;
         // draw all bones
         for (var boneIndex = 0; boneIndex < boneCount; ++boneIndex) {
 
             var boneStart = bones[boneIndex].jointStart;
 
-            jointText.children[0].innerText = '' + jointPoints[20].x + ',' + jointPoints[20].y;
             var boneEnd = bones[boneIndex].jointEnd;
 
             if (boneEnd === 20 || boneStart === 20) continue;
@@ -372,12 +370,18 @@
                 // open the sensor
                 sensor.open();
 
+                var jointText = document.getElementById('jointInfo');
                 var canvas2 = document.getElementById('kinect-bird'),
-                 game = new Game(canvas2, 1000, 500),
+                 game = new Game(canvas2),
                  gameTick = function () {
                      window.requestAnimationFrame(gameTick);
 
                      game.update(app.getBodyJoints());
+                     var text = 'GAME INFO => ';
+                     _.forEach(game.state.players, function (player) {
+                         text = text + 'Player ' + player.id + ', State: ' + player.state + ' @ ' + player.position.x + ',' + player.position.y + '    ';
+                     });
+                     jointText.children[0].innerText = text;
                  };
 
                 game.init(app.getBodyJoints());
@@ -429,10 +433,15 @@
     app.getBodyJoints = function () {
         var resultArray = [];
         for (var i = 0; i < bodies.length; i++) {
-           // if (bodies[i] != null) {
-                var t = { bodyId: bodies[i].trackingId, point: jointPoints[20], active: bodies[i].isTracked };
+            var body = bodies[i];
+            if (body != null && body.trackingId !== 0) {
+                var t = { bodyId: body.trackingId, joint: body.joints.lookup(20), active: body.isTracked };
                 resultArray.push(t);
-          //  }
+            }
+            /*else {
+                var t = { bodyId: i, point: jointPoints[20], active: false };
+                resultArray.push(t);
+            }*/
         }
 
         return resultArray;

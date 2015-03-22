@@ -7,7 +7,8 @@ export class Game {
     this.state = {
       tick: 0,
       timeToNextBlock: 50,
-      gravity: 0.0004,
+      gravity: 0.0002,
+      speed: 0.004,
       players: [],
       boxes: []
     };
@@ -93,7 +94,7 @@ export class Game {
         toRemoveList.push(i);
       }
 
-      box.position.x = box.position.x - 10.0 * state.gravity;
+      box.position.x = box.position.x - state.speed;
     }
 
     let toRemove = toRemoveList.pop();
