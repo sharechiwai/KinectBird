@@ -7,7 +7,7 @@ export class Game {
     this.state = {
       tick: 0,
       timeToNextBlock: 50,
-      gravity: 0.001,
+      gravity: 0.0004,
       players: [],
       boxes: []
     };
@@ -44,9 +44,22 @@ export class Game {
       }
 
       if (player.state === PREPARING || player.state === PLAYING) {
-        player.updateDataWith(data, self.state.gravity);
+        player.updateDataWith(data);
       }
     });
+
+    var i = self.state.players.length;
+    while (i--) {
+      let player = self.state.players[i];
+
+      if (player.state === PREPARING || player.state === PLAYING) {
+        player.stepTime(self.state.gravity);
+
+        if (player.age > 10) {
+          self.killPlayer(player);
+        }
+      }
+    }
   }
 
 

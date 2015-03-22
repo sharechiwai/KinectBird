@@ -16,24 +16,30 @@ export class Player {
     this.updateDataWith(data, 0.0);
 
     this.state = PREPARING;
+    this.age = 0;
   }
 
-  updateDataWith(data, gravity) {
+  updateDataWith(data) {
     let point = data.joint.position,
         dx = point.x - this.lastDataPosition.x,
         dy = Math.max(point.y - this.lastDataPosition.y, 0.0);
     this.lastDiff.x = ONE_MINUS_EASING * this.lastDiff.x + EASING * dx;
     this.lastDiff.y = ONE_MINUS_EASING * this.lastDiff.y + EASING * dy;
 
+    this.lastDataPosition.x = point.x;
+    this.lastDataPosition.y = point.y;
+    this.age = 0;
+  }
+
+
+  stepTime(gravity) {
+    this.age += 1;
     this.velocity.x += this.lastDiff.x;
     this.velocity.y += this.lastDiff.y - gravity;
 
     if (this.velocity.y > 0.0) {
       this.velocity.y = ONE_MINUS_EASING * this.velocity.y;
     }
-
-    this.lastDataPosition.x = point.x;
-    this.lastDataPosition.y = point.y;
 
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
