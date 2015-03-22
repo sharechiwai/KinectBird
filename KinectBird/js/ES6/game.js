@@ -22,6 +22,9 @@ export class Game {
 
     this.players = {};
     this.renderer = new Renderer(canvas);
+
+    this.availableSlots = [-0.3, 0.3, -0.2, 0.2, -0.1, 0.1, 0.0];
+    this.availableColors = [0, 1, 2, 3, 4, 5, 6];
   }
 
 
@@ -72,10 +75,11 @@ export class Game {
 
 
   createPlayer(data) {
-    let player = new Player(data, {
-      x: 0.0,
-      y: 0.0
-    }, 0.05);
+    let position = this.availableSlots.pop(),
+        player = new Player(data, {
+          x: position,
+          y: 0.0
+        }, 0.05, this.availableColors.pop());
     this.prepareGameFor(player);
 
     this.state.players.push(player);
@@ -146,12 +150,14 @@ export class Game {
   removePlayer(player) {
     this.state.players.splice(this.state.players.indexOf(player), 1);
     delete this.players[player.id];
+
+    this.availableSlots.push(player.position.x);
+    this.availableColors.push(player.color);
   }
 
 
   prepareGameFor(player) {
     player.state = PREPARING;
-    player.position.x = 0.0;
     player.position.y = 0.0;
     player.velocityY = 0.0;
     player.lastDiffY = 0.0;

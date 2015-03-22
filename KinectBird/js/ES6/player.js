@@ -7,7 +7,7 @@ export const PREPARING = 'PREPARING';
 export const PLAYING = 'PLAYING';
 
 export class Player {
-  constructor (data, position, size) {
+  constructor (data, position, size, color) {
     this.halfSize = size / 2.0;
     this.id = data.bodyId;
     this.velocityY = 0.0;
@@ -15,6 +15,7 @@ export class Player {
     this.lastDataPositionY = data.joint.position.y;
     this.position = _.clone(position);
     this.updateDataWith(data, 0.0);
+    this.color = color;
 
     this.state = PREPARING;
     this.age = 0;
