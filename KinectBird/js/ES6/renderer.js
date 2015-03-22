@@ -2,8 +2,8 @@ import { DEAD, CHECKING, READY, PLAYING } from './player.js';
 import { KinectBodyRenderer } from './kinect-body-renderer.js';
 
 const FOREGROUND_COLOR = '#FFFFFF';
-const BACKGROUND_COLOR = '#555555';
-const PIPE_COLOR = '#333333';
+const BACKGROUND_COLOR = '#111111';
+const PIPE_COLOR = '#888888';
 const COLORS = [
   [255, 255, 255],
   [255, 0, 0],
@@ -37,17 +37,18 @@ export class Renderer {
     context.font = INTERFACE_FONT;
     context.translate(0.5 * this.canvas.width, 0.575 * this.canvas.height);
     context.scale(this.canvas.width, -0.85*this.canvas.height);
+    this.renderStars(gameState.stars);
     this.renderBoxes(gameState.boxes);
     this.renderPlayers(gameState.players);
     this.renderInterface();
     context.restore();
 
     if (this.kinectBodyRenderer) {
-        context.save();
-        context.scale(1.0, 0.15);
-        context.rect(0, 0, this.canvas.width, this.canvas.height);
-        context.clip();
-        this.kinectBodyRenderer.clear(this.canvas.width, this.canvas.height);
+      context.save();
+      context.scale(1.0, 0.15);
+      context.rect(0, 0, this.canvas.width, this.canvas.height);
+      context.clip();
+      this.kinectBodyRenderer.clear(this.canvas.width, this.canvas.height);
       this.kinectBodyRenderer.renderBodiesFromPlayers(gameState.players);
       context.restore();
     }
@@ -60,6 +61,18 @@ export class Renderer {
     context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     context.fillStyle = BACKGROUND_COLOR;
     context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
+
+  renderStars(stars) {
+    var context = this.context;
+
+    context.fillStyle = '#FFFFFF';
+    _.forEach(stars, function (star) {
+      context.beginPath();
+      context.arc(star.x, star.y, 1.0 * star.speed, 0, 2*Math.PI);
+      context.fill();
+    });
   }
 
 

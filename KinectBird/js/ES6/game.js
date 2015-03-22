@@ -24,7 +24,8 @@ export class Game {
       gravity: GRAVITY,
       speed: SPEED,
       players: [],
-      boxes: []
+      boxes: [],
+      stars: []
     };
 
     this.players = {};
@@ -35,6 +36,16 @@ export class Game {
 
     this.availableSlots = [-0.3, 0.3, -0.2, 0.2, -0.1, 0.1, 0.0];
     this.availableColors = [0, 1, 2, 3, 4, 5, 6];
+
+    this.state.stars = [];
+
+    for (let i = 0; i < 20; i++) {
+      this.state.stars.push({
+        x: Math.random() - 0.5,
+        y: Math.random() - 0.5,
+        speed: (0.4 + i * 0.05) * this.state.speed
+      });
+    }
 
     this.events = {};
   }
@@ -126,12 +137,12 @@ export class Game {
 
 
   updateState() {
-    var self = this;
-    let state = self.state;
+    let self = this,
+        state = self.state;
     state.tick = state.tick + 1;
 
-    if (this.shouldMakeANewObstacle()) {
-      this.generateNewObstacle();
+    if (self.shouldMakeANewObstacle()) {
+      self.generateNewObstacle();
     }
 
     let toRemoveList = [];
@@ -143,6 +154,16 @@ export class Game {
 
       box.position.x = box.position.x - state.speed;
     }
+
+    _.forEach(state.stars, function (star, index) {
+      star.x -= star.speed;
+
+      if (star.x < -0.5) {
+        star.x = 0.5;
+        star.y = Math.random() - 0.5;
+        star.speed = (0.4 + index * 0.05) * self.state.speed;
+      }
+    });
 
     let toRemove = toRemoveList.pop();
     while (toRemove) {
