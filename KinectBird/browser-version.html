@@ -39,7 +39,8 @@
 
       var changingBody = data[0],
           bump = 0,
-          report = document.getElementById('report');
+          report = document.getElementById('report'),
+          start = new Date();
 
       changingBody.active = true;
       var gameTick = function () {
@@ -56,7 +57,8 @@
         _.forEach(game.state.players, function (player) {
           text = text + 'Player ' + player.id + ', State: ' + player.state + '    ';
         });
-        report.innerText = text + ' | Obstacles: ' + game.state.boxes.length;
+        report.innerText = text + ' | Obstacles: ' + game.state.boxes.length + ' | Took ' + ((new Date()) - start) + 'ms';
+        start = new Date();
       };
 
       window.onkeydown = function (event) {

@@ -13,10 +13,7 @@ export class Renderer {
     context.save();
     this.clear();
 
-    context.scale(
-        this.canvas.width,
-        -this.canvas.height
-    );
+    context.scale(this.canvas.width, -this.canvas.height);
     context.translate(0.5, -0.5);
     this.renderBoxes(gameState.boxes);
     this.renderPlayers(gameState.players);
@@ -27,9 +24,9 @@ export class Renderer {
   clear() {
     let context = this.context;
 
+    context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     context.fillStyle = '#B3FFFF';
-    context.rect(0, 0, this.canvas.width, this.canvas.height);
-    context.fill();
+    context.fillRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
 

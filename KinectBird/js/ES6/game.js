@@ -136,7 +136,7 @@ export class Game {
 
 
   removePlayer(player) {
-    this.state.players.splice(this.state.players.indexOf(player) - 1, 1);
+    this.state.players.splice(this.state.players.indexOf(player), 1);
     delete this.players[player.id];
   }
 
