@@ -4,7 +4,7 @@ const ONE_MINUS_EASING = 1.0 - EASING;
 const SCALING = 0.19;
 
 // Lower the quicker
-const REST_PERIOD = 335;
+const REST_PERIOD = 340;
 export const DEAD = 'DEAD';
 export const CHECKING = 'CHECKING';
 export const READY = 'READY';
