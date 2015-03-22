@@ -55,6 +55,9 @@
     <AppxManifest Include="package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="audio\congrad.wav" />
+    <Content Include="audio\mario.wav" />
+    <Content Include="audio\smb_mariodie.wav" />
     <Content Include="default.html" />
     <Content Include="gulpfile.js" />
     <Content Include="images\logo.scale-100.png" />
@@ -70,6 +73,7 @@
     <Content Include="js\ES6\player.js" />
     <Content Include="js\ES6\renderer.js" />
     <Content Include="package.json" />
+    <Content Include="smb_mariodie.wav" />
     <Content Include="vendor\js\lodash.min.js" />
     <None Include="KinectBird_TemporaryKey.pfx" />
   </ItemGroup>

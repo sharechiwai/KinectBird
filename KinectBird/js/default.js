@@ -114,6 +114,22 @@
         // populates the page elements with the app's data.
         ready: function (element, options) {
             // TODO: Initialize the page here.
+            var button1 = element.querySelector("#btnRun");
+            button1.addEventListener("click", this.button1Click, false);
+        },
+
+        button1Click: function (mouseEvent) {
+           /* var audio = document.getElementById('bgAudio');
+            audio.src = 'audio/congrad.wav';
+            audio.load();
+            */
+            var sound1 = new Audio('audio/congrad.wav');
+            var sound2 = new Audio('audio/smb_mariodie.wav');
+            sound1.mediaGroup = 'soundGroup';
+            sound2.mediaGroup = 'soundGroup';
+            sound1.play();
+            sound2.play();
+
         }
     });
 
