@@ -1,5 +1,6 @@
 import { DEAD, CHECKING, READY, PLAYING, Player  } from './player.js';
 import { Renderer } from './renderer.js';
+import { AudioEngine, JUMP, DEATH } from './audio-engine.js';
 import { Box } from './box.js';
 
 const SPEED = 0.005;
@@ -25,6 +26,7 @@ export class Game {
 
     this.players = {};
     this.renderer = new Renderer(canvas);
+    this.audioEngine = new AudioEngine();
 
     this.availableSlots = [-0.3, 0.3, -0.2, 0.2, -0.1, 0.1, 0.0];
     this.availableColors = [0, 1, 2, 3, 4, 5, 6];
@@ -72,7 +74,12 @@ export class Game {
         player.age += 1;
 
         if (player.state !== CHECKING) {
+          let oldVel = player.velocityY;
           player.stepTime(self.state.gravity);
+
+          if (oldVel < 0.0 && player.velocityY > 0.0) {
+            self.audioEngine.play(JUMP);
+          }
         }
 
         if (player.age > 10) {
@@ -159,6 +166,7 @@ export class Game {
     var self = this;
 
     player.state = DEAD;
+    self.audioEngine.play(DEATH);
     self.scheduleEventForPlayer(player, function () {
       self.prepareGameFor(player);
     }, RESPAWN_TIME);
