@@ -2,13 +2,19 @@ import { DEAD, PREPARING, PLAYING, Player  } from './player.js';
 import { Renderer } from './renderer.js';
 import { Box } from './box.js';
 
+const SPEED = 0.005;
+const GRAVITY = 0.0002;
+const PIPE_WIDTH = 1.0 / 15.0;
+const MAX_HOLE_SIZE = 0.4;
+const MIN_HOLE_SIZE = 0.2;
+
 export class Game {
   constructor(canvas) {
     this.state = {
       tick: 0,
       timeToNextBlock: 50,
-      gravity: 0.0002,
-      speed: 0.004,
+      gravity: GRAVITY,
+      speed: SPEED,
       players: [],
       boxes: []
     };
@@ -147,6 +153,7 @@ export class Game {
     player.position.x = 0.0;
     player.position.y = 0.0;
     player.velocityY = 0.0;
+    player.lastDiffY = 0.0;
 
     setTimeout(function () {
       if (player.state !== DEAD) {
@@ -167,17 +174,22 @@ export class Game {
     state.tick = 0;
     state.timeToNextBlock = Math.round(20 * Math.random() + 90);
 
-    let height = 0.4 * Math.random() + 0.3,
-        width = 1.0 / 15.0,
-        position = {
-          x: 0.5 + width,
-          y: height/2 - 0.5
-        };
+    let size = (MAX_HOLE_SIZE - MIN_HOLE_SIZE) * Math.random() + MIN_HOLE_SIZE,
+        pos = {
+          x: 0.5 + PIPE_WIDTH,
+          y: (1.0 - size) * Math.random() + size/2.0
+        },
+        heights = [
+          Math.max(1.0 - size/2.0 - pos.y, 0.0),
+          pos.y - size/2.0
+        ];
 
-    if (Math.random() > 0.5) {
-      position.y = -position.y;
-    }
-    state.boxes.push(new Box(position, width, height));
+    state.boxes.push(
+      new Box({ x: pos.x, y: pos.y - 0.5 + size/2.0 + heights[0]/2.0 }, PIPE_WIDTH, heights[0])
+    );
+    state.boxes.push(
+      new Box({ x: pos.x, y: pos.y - 0.5 - size/2.0 - heights[1]/2.0 }, PIPE_WIDTH, heights[1])
+    );
   }
 
 
