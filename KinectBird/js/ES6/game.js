@@ -56,7 +56,7 @@ export class Game {
         player.stepTime(self.state.gravity);
 
         if (player.age > 10) {
-          self.killPlayer(player);
+          self.removePlayer(player);
         }
       }
     }
@@ -132,6 +132,12 @@ export class Game {
     setTimeout(function () {
       self.prepareGameFor(player);
     }, 3000);
+  }
+
+
+  removePlayer(player) {
+    this.state.players.splice(this.state.players.indexOf(player) - 1, 1);
+    delete this.players[player.id];
   }
 
 
