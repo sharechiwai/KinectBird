@@ -124,7 +124,7 @@
         var resultArray = [];
         for (var i = 0; i < bodies.length; i++) {
             var body = bodies[i];
-            if (body !== null && body.trackingId !== 0) {
+            if (body && body.trackingId !== 0) {
               var t = { bodyId: body.trackingId, object: body, joint: body.joints.lookup(20), active: body.isTracked };
                 resultArray.push(t);
             }

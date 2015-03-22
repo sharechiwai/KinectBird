@@ -70,7 +70,7 @@ export class Renderer {
     context.fillStyle = '#FFFFFF';
     _.forEach(stars, function (star) {
       context.beginPath();
-      context.arc(star.x, star.y, 1.0 * star.speed, 0, 2*Math.PI);
+      context.arc(star.x, star.y, 0.3 * star.speed, 0, 2*Math.PI);
       context.fill();
     });
   }

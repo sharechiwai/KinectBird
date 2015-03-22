@@ -68,8 +68,8 @@
     <Content Include="audio\mario_phew_2.wav" />
     <Content Include="audio\mk64_announcer11-jp.wav" />
     <Content Include="audio\npc-yc_mario-lose.wav" />
-    <Content Include="audio\player-left.wav" />
-    <Content Include="audio\player-right.wav" />
+    <Content Include="audio\player1.wav" />
+    <Content Include="audio\player2.wav" />
     <Content Include="audio\smb_mariodie.wav" />
     <Content Include="audio\smsunshine_talk_end.wav" />
     <Content Include="audio\taosmb3_intro.mp3" />
