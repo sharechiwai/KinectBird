@@ -1,5 +1,6 @@
 const EASING = 0.1;
 const ONE_MINUS_EASING = 1.0 - EASING;
+const SCALING = 0.1;
 
 export const DEAD = 'DEAD';
 export const PREPARING = 'PREPARING';
@@ -21,8 +22,8 @@ export class Player {
 
   updateDataWith(data) {
     let point = data.joint.position,
-        dx = point.x - this.lastDataPosition.x,
-        dy = Math.max(point.y - this.lastDataPosition.y, 0.0);
+        dx = SCALING * (point.x - this.lastDataPosition.x),
+        dy = Math.max(SCALING * (point.y - this.lastDataPosition.y), 0.0);
     this.lastDiff.x = ONE_MINUS_EASING * this.lastDiff.x + EASING * dx;
     this.lastDiff.y = ONE_MINUS_EASING * this.lastDiff.y + EASING * dy;
 
