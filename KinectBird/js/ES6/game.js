@@ -7,7 +7,7 @@ export class Game {
     this.state = {
       tick: 0,
       timeToNextBlock: 50,
-      gravity: 0.0004,
+      gravity: 0.001,
       players: [],
       boxes: []
     };
@@ -90,7 +90,10 @@ export class Game {
     }
 
     _.forEach(state.players, function (player) {
-      if (player.state !== DEAD && (player.position.y < player.halfSize - 0.5 || player.position.y > 0.5 - player.halfSize)) {
+      if (player.state !== DEAD && (player.position.y < player.halfSize - 0.5 ||
+            player.position.y > 0.5 - player.halfSize ||
+            player.position.x < player.halfSize - 0.5 ||
+            player.position.x > 0.5 - player.halfSize)) {
         self.killPlayer(player);
         return;
       }
