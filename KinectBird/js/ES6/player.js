@@ -3,7 +3,8 @@ const ONE_MINUS_EASING = 1.0 - EASING;
 const SCALING = 0.2;
 
 export const DEAD = 'DEAD';
-export const PREPARING = 'PREPARING';
+export const CHECKING = 'CHECKING';
+export const READY = 'READY';
 export const PLAYING = 'PLAYING';
 
 export class Player {
@@ -17,7 +18,7 @@ export class Player {
     this.updateDataWith(data, 0.0);
     this.color = color;
 
-    this.state = PREPARING;
+    this.state = CHECKING;
     this.age = 0;
   }
 
@@ -33,7 +34,6 @@ export class Player {
 
 
   stepTime(gravity) {
-    this.age += 1;
     this.velocityY += this.lastDiffY - gravity;
 
     if (this.velocityY > 0.0) {
@@ -41,5 +41,12 @@ export class Player {
     }
 
     this.position.y += this.velocityY;
+  }
+
+
+  reset() {
+    this.position.y = 0.0;
+    this.velocityY = 0.0;
+    this.lastDiffY = 0.0;
   }
 }

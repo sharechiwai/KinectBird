@@ -1,4 +1,4 @@
-import { DEAD, PREPARING, PLAYING } from './player.js';
+import { DEAD, CHECKING, READY, PLAYING } from './player.js';
 
 const BACKGROUND_COLOR = '#555555';
 const PIPE_COLOR = '#333333';
@@ -67,7 +67,8 @@ export class Renderer {
         case DEAD:
           return;
 
-        case PREPARING:
+        case CHECKING:
+        case READY:
           context.fillStyle = 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',0.5)';
           break;
 

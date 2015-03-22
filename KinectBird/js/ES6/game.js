@@ -1,4 +1,4 @@
-import { DEAD, PREPARING, PLAYING, Player  } from './player.js';
+import { DEAD, CHECKING, READY, PLAYING, Player  } from './player.js';
 import { Renderer } from './renderer.js';
 import { Box } from './box.js';
 
@@ -6,8 +6,11 @@ const SPEED = 0.005;
 const GRAVITY = 0.0003;
 const PIPE_WIDTH = 1.0 / 15.0;
 const MAX_HOLE_SIZE = 0.5;
-const MIN_HOLE_SIZE = 0.35
-const TIME_TO_NEXT_PIPE = 90;
+const MIN_HOLE_SIZE = 0.35;
+const TICKS_TO_NEXT_PIPE = 90;
+const TIME_TO_WAIT_FOR_PLAYER_TO_BE_READY = 5000;
+const TIME_TO_WAIT_FOR_PLAYER_TO_START_FROM_READY = 3000;
+const RESPAWN_TIME = 3000;
 
 export class Game {
   constructor(canvas) {
@@ -25,6 +28,8 @@ export class Game {
 
     this.availableSlots = [-0.3, 0.3, -0.2, 0.2, -0.1, 0.1, 0.0];
     this.availableColors = [0, 1, 2, 3, 4, 5, 6];
+
+    this.events = {};
   }
 
 
@@ -54,7 +59,7 @@ export class Game {
         player = self.createPlayer(data);
       }
 
-      if (player.state === PREPARING || player.state === PLAYING) {
+      if (player.state !== DEAD) {
         player.updateDataWith(data);
       }
     });
@@ -63,8 +68,12 @@ export class Game {
     while (i--) {
       let player = self.state.players[i];
 
-      if (player.state === PREPARING || player.state === PLAYING) {
-        player.stepTime(self.state.gravity);
+      if (player.state !== DEAD) {
+        player.age += 1;
+
+        if (player.state !== CHECKING) {
+          player.stepTime(self.state.gravity);
+        }
 
         if (player.age > 10) {
           self.removePlayer(player);
@@ -75,15 +84,25 @@ export class Game {
 
 
   createPlayer(data) {
-    let position = this.availableSlots.pop(),
+    let self = this,
+        position = this.availableSlots.pop(),
         player = new Player(data, {
           x: position,
           y: 0.0
         }, 0.05, this.availableColors.pop());
-    this.prepareGameFor(player);
+
+    player.state = CHECKING;
 
     this.state.players.push(player);
     this.players[player.id] = player;
+
+    console.log('CREATING');
+    this.scheduleEventForPlayer(player, function () {
+      console.log('DONE');
+      if (self.players[player.id]) {
+        self.prepareGameFor(player);
+      }
+    }, TIME_TO_WAIT_FOR_PLAYER_TO_BE_READY);
 
     return player;
   }
@@ -141,9 +160,9 @@ export class Game {
     var self = this;
 
     player.state = DEAD;
-    setTimeout(function () {
+    self.scheduleEventForPlayer(player, function () {
       self.prepareGameFor(player);
-    }, 3000);
+    }, RESPAWN_TIME);
   }
 
 
@@ -157,16 +176,15 @@ export class Game {
 
 
   prepareGameFor(player) {
-    player.state = PREPARING;
-    player.position.y = 0.0;
-    player.velocityY = 0.0;
-    player.lastDiffY = 0.0;
+    let self = this;
+    player.state = READY;
+    player.reset();
 
-    setTimeout(function () {
-      if (player.state !== DEAD) {
+    this.scheduleEventForPlayer(player, function () {
+      if (self.players[player.id] && player.state !== DEAD) {
         player.state = PLAYING;
       }
-    }, 3000);
+    }, TIME_TO_WAIT_FOR_PLAYER_TO_START_FROM_READY);
   }
 
 
@@ -179,7 +197,7 @@ export class Game {
     var state = this.state;
 
     state.tick = 0;
-    state.timeToNextBlock = Math.round(TIME_TO_NEXT_PIPE * Math.random() / 3.3 + TIME_TO_NEXT_PIPE);
+    state.timeToNextBlock = Math.round(TICKS_TO_NEXT_PIPE * Math.random() / 3.3 + TICKS_TO_NEXT_PIPE);
 
     let size = (MAX_HOLE_SIZE - MIN_HOLE_SIZE) * Math.random() + MIN_HOLE_SIZE,
         pos = {
@@ -202,5 +220,19 @@ export class Game {
 
   renderScene() {
     this.renderer.render(this.state);
+  }
+
+
+  scheduleEventForPlayer(player, callback, time) {
+    var self = this,
+        event = this.events[player.id];
+    if (event) {
+      clearTimeout(event);
+    }
+
+    self.events[player.id] = setTimeout(function () {
+      delete self.events[player.id];
+      callback(player);
+    }, time);
   }
 }
