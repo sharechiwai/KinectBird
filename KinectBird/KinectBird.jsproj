@@ -56,8 +56,21 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="audio\congrad.wav" />
+    <Content Include="audio\jump-small.wav" />
+    <Content Include="audio\jump.wav" />
+    <Content Include="audio\letsgo.wav" />
+    <Content Include="audio\lm_mario_yoo-hoo.wav" />
     <Content Include="audio\mario.wav" />
+    <Content Include="audio\mariodie.wav" />
+    <Content Include="audio\mario_here_we_go.wav" />
+    <Content Include="audio\mario_ow_4.wav" />
+    <Content Include="audio\mario_phew_2.wav" />
+    <Content Include="audio\mk64_announcer11-jp.wav" />
+    <Content Include="audio\npc-yc_mario-lose.wav" />
     <Content Include="audio\smb_mariodie.wav" />
+    <Content Include="audio\smsunshine_talk_end.wav" />
+    <Content Include="audio\taosmb3_intro.mp3" />
+    <Content Include="audio\wonderful.wav" />
     <Content Include="default.html" />
     <Content Include="gulpfile.js" />
     <Content Include="images\logo.scale-100.png" />

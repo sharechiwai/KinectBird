@@ -35,14 +35,14 @@
 
 canvas {
     position: absolute;
-    width: 80%;
+    width: 40%;
     height: 90%;
     background-color: black;
 }
 
 canvas#mainCanvas {
     left: 5%;
-    display: none;
+    
 }
 
 canvas#kinect-bird {
