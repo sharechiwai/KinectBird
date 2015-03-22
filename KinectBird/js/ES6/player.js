@@ -10,7 +10,7 @@ export class Player {
     this.halfSize = size / 2.0;
     this.id = data.bodyId;
     this.velocity = { x: 0.0, y: 0.0 };
-    this.lastDataPosition = _.clone(data.joint.position);
+    this.lastDataPosition = { x: data.joint.position.x, y: data.joint.position.y };
     this.lastDiff = { x: 0.0, y: 0.0 };
     this.position = _.clone(position);
     this.updateDataWith(data, 0.0);
