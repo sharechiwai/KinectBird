@@ -1,8 +1,10 @@
 const EASING = 0.1;
 const ONE_MINUS_EASING = 1.0 - EASING;
-const SCALING = 0.3;
+// lower jump harder
+const SCALING = 0.175;
 
-const REST_PERIOD = 600;
+// Lower the quicker
+const REST_PERIOD = 335;
 export const DEAD = 'DEAD';
 export const CHECKING = 'CHECKING';
 export const READY = 'READY';
