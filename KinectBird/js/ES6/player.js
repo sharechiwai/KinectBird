@@ -19,9 +19,13 @@ export class Player {
 
     this.state = CHECKING;
     this.age = 0;
+    this.livingPeriod = 0;
 
     this.color = color;
     this.overheadText = null;
+
+    this.currentScore = 0;
+    this.highScore = 0;
   }
 
   updateDataWith(data) {
@@ -50,5 +54,7 @@ export class Player {
     this.position.y = 0.0;
     this.velocityY = 0.0;
     this.lastDiffY = 0.0;
+    this.currentScore = 0;
+    this.livingPeriod = 0;
   }
 }

@@ -75,7 +75,13 @@ export class Game {
 
         if (player.state !== CHECKING) {
           let oldVel = player.velocityY;
+
           player.stepTime(self.state.gravity);
+
+          if (player.state === PLAYING) {
+            player.livingPeriod += 1;
+            player.currentScore = Math.floor(player.livingPeriod / 30);
+          }
 
           if (oldVel < 0.0 && player.velocityY > 0.0) {
             self.audioEngine.play(JUMP);
@@ -167,6 +173,9 @@ export class Game {
 
     player.state = DEAD;
     self.audioEngine.play(DEATH);
+    if (player.currentScore > player.highScore) {
+      player.highScore = player.currentScore;
+    }
     self.scheduleEventForPlayer(player, function () {
       self.prepareGameFor(player);
     }, RESPAWN_TIME);
