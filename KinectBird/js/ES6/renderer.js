@@ -15,7 +15,7 @@ const COLORS = [
 ];
 
 const INTERFACE_TEXT_SCALING = 0.03;
-const INTERFACE_FONT = '1px Tahoma, Verdana, Segoe, sans-serif';
+const INTERFACE_FONT = "1px 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace";
 
 var colorFor = function (index, alpha) {
   'use strict';
