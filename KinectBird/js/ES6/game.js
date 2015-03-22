@@ -126,7 +126,6 @@ export class Game {
         }, 0.05, this.availableColors.pop());
 
     player.state = CHECKING;
-    player.overheadText = '?';
 
     this.state.players.push(player);
     this.players[player.id] = player;
