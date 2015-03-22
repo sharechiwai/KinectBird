@@ -3,15 +3,15 @@ import { KinectBodyRenderer } from './kinect-body-renderer.js';
 
 const FOREGROUND_COLOR = '#FFFFFF';
 const BACKGROUND_COLOR = '#111111';
-const PIPE_COLOR = '#888888';
+const PIPE_COLOR = 'rgb(170, 168, 57)';
 const COLORS = [
-  [255, 255, 255],
-  [255, 0, 0],
-  [0, 255, 0],
-  [0, 0, 255],
-  [255, 255, 0],
-  [255, 0, 255],
-  [0, 255, 255]
+  [45, 136, 45],
+  [57, 50, 118],
+  [170, 145, 57],
+  [170, 57, 57],
+  [85, 43, 114],
+  [38, 114, 87],
+  [170, 94, 57]
 ];
 
 const INTERFACE_TEXT_SCALING = 0.03;
