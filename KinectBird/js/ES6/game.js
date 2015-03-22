@@ -146,8 +146,7 @@ export class Game {
     player.state = PREPARING;
     player.position.x = 0.0;
     player.position.y = 0.0;
-    player.velocity.x = 0.0;
-    player.velocity.y = 0.0;
+    player.velocityY = 0.0;
 
     setTimeout(function () {
       if (player.state !== DEAD) {

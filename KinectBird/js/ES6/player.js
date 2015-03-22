@@ -10,9 +10,9 @@ export class Player {
   constructor (data, position, size) {
     this.halfSize = size / 2.0;
     this.id = data.bodyId;
-    this.velocity = { x: 0.0, y: 0.0 };
-    this.lastDataPosition = { x: data.joint.position.x, y: data.joint.position.y };
-    this.lastDiff = { x: 0.0, y: 0.0 };
+    this.velocityY = 0.0;
+    this.lastDiffY = 0.0;
+    this.lastDataPositionY = data.joint.position.y;
     this.position = _.clone(position);
     this.updateDataWith(data, 0.0);
 
@@ -22,27 +22,23 @@ export class Player {
 
   updateDataWith(data) {
     let point = data.joint.position,
-        dx = SCALING * (point.x - this.lastDataPosition.x),
-        dy = Math.max(SCALING * (point.y - this.lastDataPosition.y), 0.0);
-    this.lastDiff.x = ONE_MINUS_EASING * this.lastDiff.x + EASING * dx;
-    this.lastDiff.y = ONE_MINUS_EASING * this.lastDiff.y + EASING * dy;
+        dy = Math.max(SCALING * (point.y - this.lastDataPositionY), 0.0);
 
-    this.lastDataPosition.x = point.x;
-    this.lastDataPosition.y = point.y;
+    this.lastDiffY = ONE_MINUS_EASING * this.lastDiffY + EASING * dy;
+    this.lastDataPositionY = point.y;
+
     this.age = 0;
   }
 
 
   stepTime(gravity) {
     this.age += 1;
-    this.velocity.x += this.lastDiff.x;
-    this.velocity.y += this.lastDiff.y - gravity;
+    this.velocityY += this.lastDiffY - gravity;
 
-    if (this.velocity.y > 0.0) {
-      this.velocity.y = ONE_MINUS_EASING * this.velocity.y;
+    if (this.velocityY > 0.0) {
+      this.velocityY = ONE_MINUS_EASING * this.velocityY;
     }
 
-    this.position.x += this.velocity.x;
-    this.position.y += this.velocity.y;
+    this.position.y += this.velocityY;
   }
 }
